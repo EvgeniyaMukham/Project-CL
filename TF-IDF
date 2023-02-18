@@ -1,1 +1,133 @@
 
+import nltk
+import os
+from nltk.tokenize import word_tokenize, wordpunct_tokenize
+from nltk import download
+download('punkt')
+download('stopwords')
+from nltk.corpus import stopwords
+from collections import Counter
+from pymystem3 import Mystem
+mystem = Mystem()
+
+def clean_text(text):
+  text = text.lower() # приведение к нижнему регистру
+  text_list_nltk = word_tokenize(text) # токенизация
+  stop_words = stopwords.words('russian')
+  stop_words += ['это', 'нам', 'тебе', 'сих', 'пор', 'что-то'] # расширение списка стоп-слов
+  text_without_punkt = [word for word in text_list_nltk if word[0].isalpha()] # удаление пунктуации из списка токенов
+  text_clean = [word for word in text_without_punkt if word not in stop_words] # удаление стоп-слов
+  text_lem = mystem.lemmatize(' '.join(text_clean))  # лемматизация
+  lem_text = [word for word in text_lem if word[0].isalpha()]  # удаление лишних пробелов и знаков препинания
+
+  return lem_text
+
+with open('almatea.txt', 'r') as open_file:
+  almatea = open_file.read()
+  almatea = clean_text(almatea)
+almatea_text = ' '.join(almatea)
+with open('baby.txt', 'r') as open_file:
+  baby = open_file.read()
+  baby = clean_text(baby)
+baby_text = ' '.join(baby)
+with open('beetle.txt', 'r') as open_file:
+  beetle = open_file.read()
+  beetle = clean_text(beetle)
+beetle_text = ' '.join(beetle)
+with open('bespokoj.txt', 'r') as open_file:
+  bespokoj = open_file.read()
+  bespokoj = clean_text(bespokoj)
+bespokoj_text = ' '.join(bespokoj)
+with open('billion.txt', 'r') as open_file:
+  billion = open_file.read()
+  billion = clean_text(billion)
+billion_text = ' '.join(billion)
+with open('hotel.txt', 'r') as open_file:
+  hotel = open_file.read()
+  hotel = clean_text(hotel)
+hotel_text = ' '.join(hotel)
+with open('picnic.txt', 'r') as open_file:
+  picnic = open_file.read()
+  picnic = clean_text(picnic)
+picnic_text = ' '.join(picnic)
+print(len(picnic_text))
+print(picnic_text)
+with open('snail.txt', 'r') as open_file:
+  snail = open_file.read()
+  snail = clean_text(snail)
+snail_text = ' '.join(snail)
+with open('uglyswan.txt', 'r') as open_file:
+  uglyswan = open_file.read()
+  uglyswan = clean_text(uglyswan)
+uglyswan_text = ' '.join(uglyswan)
+
+#Собираем корпус из лемматизированных текстов:
+corpus = [almatea_text, baby_text, beetle_text, bespokoj_text, billion_text, hotel_text, picnic_text, snail_text, uglyswan_text]
+name = ['Путь на Альматею', 'Малыш', 'Жук в муравейнике', 'Беспокойство', 'За миллион лет до конца света (рукопись, найденная при странных обстоятельствах)', 'Отель "У погибшего альпиниста"', 'Пикник на обочине', 'Улитка на склоне', 'Гадкие лебеди']
+
+#Определяем объем корпуса:
+for text in corpus:
+  print(len(text))
+
+len_text = []
+
+for text in corpus:
+  if len(text) not in len_text:
+    len_text.append(len(text))
+
+print(len_text)
+
+print('Объем корпуса в словах:', sum(len_text))
+print('Объем корпуса в текстах:', len(corpus))
+
+from sklearn.feature_extraction.text import TfidfVectorizer
+tfidf_vectorizer = TfidfVectorizer()
+
+tfidf = tfidf_vectorizer.fit_transform(corpus)
+tfidf.todense()
+
+words = tfidf_vectorizer.get_feature_names_out()
+#print(words)
+
+import pandas as pd
+
+#Датафрейм:
+data = tfidf.todense().tolist()
+strug = pd.DataFrame(data, index= name, columns= words)
+
+print(strug)
+print(strug['зона'])#TF-IDF для отдельных лексем
+print(strug['лес'])
+print(strug['одиночество'])
+print(strug['одинокий'])
+print(strug['одиноко'])
+print(strug['непознанный'])
+print(strug['неведомый'])
+print(strug['тайна'])
+print(strug['таинственный'])
+print(strug['загадка'])
+print(strug['загадочный'])
+print(strug['мистика'])
+print(strug['мистический'])
+print(strug['мистифицировать'])
+print(strug['странный'])
+print(strug['странно'])
+print(strug['странность'])
+print(strug['страх'])
+print(strug['страшный'])
+print(strug['страшно'])
+print(strug['ужас'])
+print(strug['ужасный'])
+print(strug['ужасно'])
+print(strug['жуть'])
+print(strug['жуткий'])
+print(strug['жутко'])
+print(strug['бояться'])
+print(strug['тревога'])
+print(strug['тревожный'])
+print(strug['тревожить'])
+print(strug['тревожиться'])
+print(strug['опасный'])
+print(strug['опасность'])
+print(strug['опасно'])
+
