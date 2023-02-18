@@ -26,7 +26,7 @@ with open('hotel.txt', 'r') as open_file:
   hotel = open_file.read()
   hotel = clean_text(hotel)
   print(hotel)
-  print(len(hotel))
+  print(len(hotel)#объем текста в словах
 
 import re
 
@@ -190,4 +190,11 @@ for word in freq_bigramms:
     strashny.append(word)
 print(strashny)
 print(len(strashny))
+
+
+
+
+
+
+
 
