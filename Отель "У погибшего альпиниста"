@@ -17,7 +17,7 @@ def clean_text(text):
   stop_words += ['это', 'нам', 'тебе', 'сих', 'пор', 'что-то']
   text_without_punkt = [word for word in text_list_nltk if word[0].isalpha()] # удалить пунктуацию из списка токенов
   text_clean = [word for word in text_without_punkt if word not in stop_words] # чистим от стоп-слов
-  text_lem = mystem.lemmatize(' '.join(text_clean))  # лемматизфция
+  text_lem = mystem.lemmatize(' '.join(text_clean))  # лемматизация
   lem_text = [word for word in text_lem if word[0].isalpha()]  # удаляем лишние пробелы и знаки препинания
 
   return lem_text
@@ -26,7 +26,7 @@ with open('hotel.txt', 'r') as open_file:
   hotel = open_file.read()
   hotel = clean_text(hotel)
   print(hotel)
-  print(len(hotel)#объем текста в словах
+  print(len(hotel))#объем текста в словах
 
 import re
 
