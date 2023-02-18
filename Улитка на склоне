@@ -1,1 +1,192 @@
 
+import nltk
+import os
+from nltk.tokenize import word_tokenize, wordpunct_tokenize
+from nltk import download
+download('punkt')
+download('stopwords')
+from nltk.corpus import stopwords
+from collections import Counter
+from pymystem3 import Mystem
+mystem = Mystem()
+
+def clean_text(text):
+  text = text.lower() # нижний регистр
+  text_list_nltk = word_tokenize(text) # токенизация
+  stop_words = stopwords.words('russian')
+  stop_words += ['это', 'нам', 'тебе', 'сих', 'пор', 'что-то']
+  text_without_punkt = [word for word in text_list_nltk if word[0].isalpha()] # удалить пунктуацию из списка токенов
+  text_clean = [word for word in text_without_punkt if word not in stop_words] # чистим от стоп-слов
+  text_lem = mystem.lemmatize(' '.join(text_clean))  # лемматизфция
+  lem_text = [word for word in text_lem if word[0].isalpha()]  # удаляем лишние пробелы и знаки препинания
+
+  return lem_text
+
+with open('snail.txt', 'r') as open_file:
+  snail = open_file.read()
+  snail = clean_text(snail)
+  #print(snail)
+  print(len(snail))
+
+import re
+
+result_mystery = re.findall(r'та[йиe]н', str(snail))
+print(result_mystery)
+print("Суммарное число употреблений лексемы 'тайна' и ее дериватов ('Улитка на склоне'):", len(result_mystery))
+for word in snail:
+  if 'тайн' in word:
+    print(word)
+
+for word in snail:
+  if 'таин' in word:
+    print(word)
+
+result_strange = re.findall('r[^о]странн', str(snail))
+print(result_strange)
+print("Суммарное число употреблений лексемы 'странный' и ее дериватов ('Улитка на склоне'):", len(result_strange))
+for word in snail:
+  if 'странн' in word:
+    print(word)
+
+result_sagad = re.findall(r'загад', str(snail))
+print(result_sagad)
+print("Суммарное число употреблений лексемы 'загадка' и ее дериватов ('Улитка на склоне'):", len(result_sagad))
+for word in snail:
+  if 'загад' in word:
+    print(word)
+
+result_neob = re.findall(r'необъясн', str(snail))
+print(result_neob)
+print("Суммарное число употреблений лексемы 'необъяснимый' и ее дериватов ('Улитка на склоне'):", len(result_neob))
+for word in snail:
+  if 'необъясн' in word:
+    print(word)
+
+result_neved = re.findall(r'неведом', str(snail))
+print(result_neved)
+print("Суммарное число употреблений лексемы 'неведомый' и ее дериватов ('Улитка на склоне'):", len(result_neved))
+for word in snail:
+  if 'неведом' in word:
+    print(word)
+
+result_neizv = re.findall(r'неизвест', str(snail))
+print(result_neizv)
+print("Суммарное число употреблений лексемы 'неизвестный' и ее дериватов ('Улитка на склоне'):", len(result_neizv))
+for word in snail:
+  if 'неизвест' in word:
+    print(word)
+
+result_nepon = re.findall(r'непонят', str(snail))
+print(result_nepon)
+print("Суммарное число употреблений лексемы 'непонятный' и ее дериватов ('Улитка на склоне'):", len(result_nepon))
+for word in snail:
+  if 'непонят' in word:
+    print(word)
+
+result_neyasn = re.findall(r'неясн', str(snail))
+print(result_neyasn)
+print("Суммарное число употреблений лексемы 'неясный' и ее дериватов ('Улитка на склоне'):", len(result_neyasn))
+for word in snail:
+  if 'неясн' in word:
+    print(word)
+
+
+result_fear1 = re.findall(r'стра[хш]', str(snail))
+print(result_fear1)
+print("Суммарное число употреблений лексемы 'страх' и ее дериватов ('Улитка на склоне'):", len(result_fear1))
+for word in snail:
+  if 'страх' in word:
+    print(word)
+
+for word in snail:
+  if 'страш' in word:
+    print(word)
+
+result_fear2 = re.findall(r'\bжут[ьк]', str(snail))
+print(result_fear2)
+print("Суммарное число употреблений лексемы 'жуть' и ее дериватов ('Улитка на склоне'):", len(result_fear2))
+
+for word in snail:
+  if 'жут' in word:
+    print(word)
+
+result_fear3 = re.findall(r'ужас', str(snail))
+print(result_fear3)
+print("Суммарное число употреблений лексемы 'ужас' и ее дериватов ('Улитка на склоне'):", len(result_fear3))
+for word in snail:
+  if 'ужас' in word:
+    print(word)
+
+result_fear4 = re.findall(r'трево', str(snail))
+print(result_fear4)
+print("Суммарное число употреблений лексемы 'тревога' и ее дериватов ('Улитка на склоне'):", len(result_fear4))
+for word in snail:
+  if 'трево' in word:
+    print(word)
+
+result_fear5 = re.findall(r'боя[зт]', str(snail))
+print(result_fear5)
+print("Суммарное число употреблений лексемы 'боязнь' и ее дериватов ('Улитка на склоне'):", len(result_fear5))
+for word in snail:
+  if 'боя' in word:
+    print(word)
+
+result_fear6 = re.findall(r'опас[ан]', str(snail))
+print(result_fear6)
+print("Суммарное число употреблений лексемы 'опасность' и ее дериватов ('Улитка на склоне'):", len(result_fear6))
+for word in snail:
+  if 'опас' in word:
+    print(word)
+
+result_fear7 = re.findall(r'мисти', str(snail))
+print(result_fear7)
+print("Суммарное число употреблений лексемы 'мистика' и ее дериватов ('Улитка на склоне'):", len(result_fear7))
+for word in snail:
+  if 'мисти' in word:
+    print(word)
+
+print(Counter(snail).most_common(20))
+freq_bigramms = Counter(nltk.bigrams(snail))
+print(freq_bigramms.most_common(10))
+
+
+
+print('ipm_лес -', snail.count('лес')/len(snail) * 1000000)
+print('ipm_знать -', snail.count('знать')/len(snail) * 1000000)
+print('ipm_сказать -', snail.count('сказать')/len(snail) * 1000000)
+print('ipm_понимать -', snail.count('понимать')/len(snail) * 1000000)
+
+ipm = len(result_mystery)/len(snail) * 1000000
+print('ipm_лексемы "тайна" и ее дериватов -', len(result_mystery)/len(snail) * 1000000)
+print('ipm_лексемы "странный" и ее дериватов -', len(result_strange)/len(snail) * 1000000)
+print('ipm_лексемы "загадка" и ее дериватов -', len(result_sagad)/len(snail) * 1000000)
+print('ipm_лексемы "необъяснимый" и ее дериватов -', len(result_neob)/len(snail) * 1000000)
+print('ipm_лексемы "неведомый" и ее дериватов -', len(result_neved)/len(snail) * 1000000)
+print('ipm_лексемы "неизвестный" и ее дериватов -', len(result_neizv)/len(snail) * 1000000)
+print('ipm_лексемы "непонятный" и ее дериватов -', len(result_nepon)/len(snail) * 1000000)
+print('ipm_лексемы "неясный" и ее дериватов -', len(result_neyasn)/len(snail) * 1000000)
+print('ipm_лексемы "страх" и ее дериватов -', len(result_fear1)/len(snail) * 1000000)
+print('ipm_лексемы "жуть" и ее дериватов -', len(result_fear2)/len(snail) * 1000000)
+print('ipm_лексемы "ужас" и ее дериватов -', len(result_fear3)/len(snail) * 1000000)
+print('ipm_лексемы "тревога" и ее дериватов -', len(result_fear4)/len(snail) * 1000000)
+print('ipm_лексемы "боязнь" и ее дериватов -', len(result_fear5)/len(snail) * 1000000)
+print('ipm_лексемы "опасность" и ее дериватов -', len(result_fear6)/len(snail) * 1000000)
+print('ipm_лексемы "мистика" и ее дериватов -', len(result_fear7)/len(snail) * 1000000)
+
+freq_bigramms = Counter(nltk.bigrams(snail))
+print(sorted(freq_bigramms.most_common(10)))
+
+
+stranny = []
+for word in freq_bigramms:
+  if 'странный' in word or 'странно' in word and word not in stranny:
+    stranny.append(word)
+print(stranny)
+print(len(stranny))
+
+strashny = []
+for word in freq_bigramms:
+  if 'страшный' in word or 'страшно' in word or 'страх' in word and word not in strashny:
+    strashny.append(word)
+print(strashny)
+print(len(strashny))
