@@ -50,8 +50,6 @@ with open('picnic.txt', 'r') as open_file:
   picnic = open_file.read()
   picnic = clean_text(picnic)
 picnic_text = ' '.join(picnic)
-print(len(picnic_text))
-print(picnic_text)
 with open('snail.txt', 'r') as open_file:
   snail = open_file.read()
   snail = clean_text(snail)
@@ -65,7 +63,7 @@ uglyswan_text = ' '.join(uglyswan)
 corpus = [almatea_text, baby_text, beetle_text, bespokoj_text, billion_text, hotel_text, picnic_text, snail_text, uglyswan_text]
 name = ['Путь на Альматею', 'Малыш', 'Жук в муравейнике', 'Беспокойство', 'За миллион лет до конца света (рукопись, найденная при странных обстоятельствах)', 'Отель "У погибшего альпиниста"', 'Пикник на обочине', 'Улитка на склоне', 'Гадкие лебеди']
 
-#Определяем объем корпуса:
+#Определяем ориентировочный объем корпуса в символах:
 for text in corpus:
   print(len(text))
 
@@ -76,8 +74,8 @@ for text in corpus:
     len_text.append(len(text))
 
 print(len_text)
-
-print('Объем корпуса в словах:', sum(len_text))
+print(len(picnic_text))
+print('Объем корпуса в символах:', sum(len_text))
 print('Объем корпуса в текстах:', len(corpus))
 
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -130,4 +128,3 @@ print(strug['тревожиться'])
 print(strug['опасный'])
 print(strug['опасность'])
 print(strug['опасно'])
-
